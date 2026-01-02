@@ -18,25 +18,6 @@ if ! command -v docker &>/dev/null; then
     curl -fsSL https://get.docker.com | sh
 fi
 
-echo "==> Preparing for rootless Docker installation..."
-
-# Disable system-wide Docker service
-if systemctl is-active --quiet docker.service; then
-    echo "    Stopping and disabling system Docker service..."
-    sudo systemctl disable --now docker.service || true
-fi
-
-if systemctl is-active --quiet docker.socket; then
-    echo "    Stopping and disabling Docker socket..."
-    sudo systemctl disable --now docker.socket || true
-fi
-
-# Remove system Docker socket if it exists
-if [ -e /var/run/docker.sock ]; then
-    echo "    Removing system Docker socket..."
-    sudo rm /var/run/docker.sock
-fi
-
 # Add docker user to docker group
 echo "==> Adding docker user to docker group..."
 sudo usermod -aG docker docker

@@ -6,7 +6,7 @@ set -e
 
 echo "==> Installing common CLI tools..."
 
-sudo apt-get update
-sudo apt-get install -y jq
+apt-get update
+apt-get install -y jq sudo
 
 echo "==> Tool installation complete!"

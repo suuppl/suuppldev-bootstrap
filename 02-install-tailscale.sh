@@ -18,4 +18,16 @@ echo "    Downloading and running Tailscale installation script..."
 curl -fsSL https://tailscale.com/install.sh | sh
 
 echo "==> Tailscale installed successfully!"
-echo "    Run 'sudo tailscale up' to connect this machine to your Tailscale network"
+
+# Check if already connected
+if tailscale status --self &>/dev/null && tailscale status | grep -q "Logged in"; then
+    echo "    Tailscale is already connected."
+    echo "    Check status: tailscale status"
+else
+    echo "==> Connecting to Tailscale network..."
+    tailscale up
+    
+    echo "==> Tailscale is now connected!"
+    echo "    Check status: tailscale status"
+fi
+
