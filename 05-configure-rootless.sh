@@ -115,4 +115,17 @@ echo "==> Port forwarding configured successfully!"
 echo "    Port 80 -> 8080"
 echo "    Port 443 -> 8443"
 
+# Check if acl is available
+if ! command -v acl &>/dev/null; then
+    echo "    Installing acl..."
+    apt-get update
+    apt-get install -y acl
+fi
+
+# locations: /data /appdata
+for dir in /data /appdata; do
+    echo "Setting ACLs on ${dir} for user '${DOCKER_USER}'..."
+    setfacl -Rm d:u:"${DOCKER_USER}":rwX, u:"${DOCKER_USER}":rwX "${dir}"
+done
+
 echo "==> Rootless Docker setup complete for user '${DOCKER_USER}'!"
