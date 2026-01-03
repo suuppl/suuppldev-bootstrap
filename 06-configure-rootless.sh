@@ -61,4 +61,16 @@ echo "==> Rootless Docker configured successfully!"
 echo "    Docker socket: \$XDG_RUNTIME_DIR/docker.sock"
 EOF
 
+
+# configuring source IP propagation for rootless docker
+mkdir -p $HOME/.config/systemd/user/docker.service.d
+cat <<EOL > $HOME/.config/systemd/user/docker.service.d/override.conf
+[Service]
+Environment="DOCKERD_ROOTLESS_ROOTLESSKIT_PORT_DRIVER=slirp4netns"
+EOL
+# Reload systemd user daemon and restart docker
+systemctl --user daemon-reload
+systemctl --user restart docker
+
+
 echo "==> Rootless Docker setup complete for user '${DOCKER_USER}'!"
