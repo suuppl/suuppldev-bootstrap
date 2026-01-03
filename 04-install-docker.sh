@@ -20,7 +20,7 @@ fi
 
 # Add docker user to docker group
 echo "==> Adding docker user to docker group..."
-sudo usermod -aG docker docker
+usermod -aG docker docker
 
 echo "==> Docker installation and preparation completed successfully!"
 echo "    Next step: Run 03-configure-rootless.sh as the docker user"

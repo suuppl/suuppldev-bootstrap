@@ -1,20 +1,20 @@
 #!/bin/bash
 set -euo pipefail
 
-echo "==> Creating docker user..."
+echo "==> Creating user..."
 
 if [ "${EUID}" -ne 0 ]; then
     echo "This script must be run as root." >&2
     exit 1
 fi
 
-read -rp "Enter username to create [docker]: " BOOTSTRAP_USER
-BOOTSTRAP_USER=${BOOTSTRAP_USER:-docker}
+read -rp "Enter username to create [user]: " BOOTSTRAP_USER
+BOOTSTRAP_USER=${BOOTSTRAP_USER:-user}
 
 if id "${BOOTSTRAP_USER}" &>/dev/null; then
     echo "    User '${BOOTSTRAP_USER}' already exists, ensuring configuration..."
 else
-    adduser --gecos "" --disabled-password "${BOOTSTRAP_USER}"
+    adduser --gecos "" "${BOOTSTRAP_USER}"
     echo "    User '${BOOTSTRAP_USER}' created."
 fi
 
