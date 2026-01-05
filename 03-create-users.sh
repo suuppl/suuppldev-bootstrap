@@ -35,4 +35,4 @@ else
     echo "    No SSH key provided; authorized_keys not created."
 fi
 
-echo "==> Docker user setup complete!"
+echo "==> user setup complete!"
