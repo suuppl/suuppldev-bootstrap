@@ -15,7 +15,7 @@ echo " - Enforce public key authentication"
 
 if [ -n "${ALLOW_USER}" ]; then
     echo " - Restrict login to user(s): ${ALLOW_USER}"
-else
+fi
 
 read -p "Do you want to continue? [Y/n] " -n 1 -r
 echo
