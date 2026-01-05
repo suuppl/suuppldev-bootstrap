@@ -4,13 +4,18 @@ set -euo pipefail
 # 04-harden-ssh.sh
 # Apply conservative SSH hardening to /etc/ssh/sshd_config
 # Usage: sudo ./04-harden-ssh.sh [allowuser]
+ALLOW_USER="${1:-}"
+
 
 echo "==> Applying SSH hardening..."
 echo "This will:"
 echo " - Disable root login"
 echo " - Disable password authentication"
 echo " - Enforce public key authentication"
-echo " - Optionally restrict login to a specific user"
+
+if [ -n "${ALLOW_USER}" ]; then
+    echo " - Restrict login to user(s): ${ALLOW_USER}"
+else
 
 read -p "Do you want to continue? [Y/n] " -n 1 -r
 echo
@@ -19,7 +24,6 @@ if [[ $REPLY =~ ^[Nn]$ ]]; then
 else
 
     SSHD_CONF=/etc/ssh/sshd_config
-    ALLOW_USER="${1:-}"
 
     if [ ! -w "${SSHD_CONF}" ]; then
         echo "Cannot write ${SSHD_CONF}; run as root to apply changes." >&2
@@ -63,9 +67,6 @@ else
         echo "systemd-managed ssh service not found; please restart sshd manually." >&2
     fi
 
-    cat <<EOF
-    SSH hardening applied. To restore previous config:
-    sudo cp ${SSHD_CONF}.bak.${TIMESTAMP} ${SSHD_CONF} && sudo systemctl reload sshd || sudo systemctl reload ssh
-    EOF
-
+    echo "SSH hardening applied. To restore previous config:"
+    echo "sudo cp ${SSHD_CONF}.bak.${TIMESTAMP} ${SSHD_CONF} && sudo systemctl reload sshd || sudo systemctl reload ssh"
 fi
