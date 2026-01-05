@@ -16,38 +16,6 @@ curl -L https://github.com/suuppl/suuppldev-bootstrap/archive/refs/heads/main.ta
 cd suuppldev-bootstrap-main
 ```
 
-## 🚀 Usage
-
-Run the scripts as root. Each script performs a specific setup task and is safe to re-run.
-
-### 0. Prepare Proxmox VE (optional, if running on proxmox)
-```bash
-./00-prepare-pve.sh
-```
-
-Runs the [PVE Post Install Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
-
-### 1. Install Development Tools
-```bash
-./01-install-tools.sh
-```
-Installs useful development and debugging tools:
-- `jq` `sudo` `git` `wget` `curl` `unzip` `btop`
-- Build essentials and common utilities
-
-### 2. Install Tailscale
-```bash
-./02-install-tailscale.sh
-```
-Installs and connects Tailscale VPN client:
-- Adds Tailscale repository
-- Installs `tailscale` package
-- Automatically runs `tailscale up` to connect
-
-### 3. Create Docker User
-```bash
-./03-create-docker-user.sh
-```
 ## Bootstrap scripts
 
 Small collection of scripts to prepare a fresh Debian/Ubuntu server for running the Suuppl services.
@@ -57,7 +25,8 @@ TL;DR:
 - `01-install-tools.sh` — Install basic CLI utilities and third-party CLIs (Tailscale, Doppler).
 - `02-create-docker-user.sh` — Create a dedicated `docker` user, configure `~/.ssh/authorized_keys`, and manage a GitHub Actions deploy key (can generate one).
 - `03-create-users.sh` — Create a regular admin user and add it to `sudo` (interactive).
-- `04-install-docker.sh` — Install Docker Engine (convenience script) and add the `docker` user to the `docker` group.
+- `04-harden-ssh-sh [users]` — Applies common SSH hardening, optionally restrict ssh login to given users
+- `05-install-docker.sh` — Install Docker Engine (convenience script) and add the `docker` user to the `docker` group.
 
 These four scripts are intended to be run (as root) in roughly the order above. They are interactive in places where secrets or SSH keys are required.
 

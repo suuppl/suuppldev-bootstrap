@@ -9,7 +9,7 @@ echo "==> Installing Docker..."
 # Check if Docker is already installed
 if command -v docker &>/dev/null; then
     echo "    Docker is already installed (version: $(docker --version))"
-    echo "    Continuing with preparation for rootless install..."
+    exit 0
 fi
 
 # Install Docker using convenience script
@@ -23,4 +23,3 @@ echo "==> Adding docker user to docker group..."
 usermod -aG docker docker
 
 echo "==> Docker installation and preparation completed successfully!"
-echo "    Next step: Run 03-configure-rootless.sh as the docker user"

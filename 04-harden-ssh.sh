@@ -60,10 +60,10 @@ if [ -n "${ALLOW_USER}" ]; then
 fi
 
 # Try to reload sshd (support both service names)
-if systemctl list-units --type=service --all | grep -q "sshd.service"; then
-    systemctl reload sshd || systemctl restart sshd || echo "Failed to reload sshd; restart manually." >&2
-elif systemctl list-units --type=service --all | grep -q "ssh.service"; then
-    systemctl reload ssh || systemctl restart ssh || echo "Failed to reload ssh; restart manually." >&2
+        if systemctl --no-pager list-unit-files --type=service --all | grep "sshd.service"; then
+            systemctl reload sshd || systemctl restart sshd || echo "Failed to reload sshd; restart manually." >&2
+        elif systemctl --no-pager list-unit-files --type=service --all | grep "ssh.service"; then
+            systemctl reload ssh || systemctl restart ssh || echo "Failed to reload ssh; restart manually." >&2
 else
     echo "systemd-managed ssh service not found; please restart sshd manually." >&2
 fi

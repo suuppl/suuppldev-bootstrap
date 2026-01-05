@@ -83,11 +83,8 @@ else
         echo "==> Doppler CLI installed successfully!"
     fi
     echo ""
-    echo "Configuration steps:"
-    echo "  1. For development environment, run as docker user:"
-    echo "     echo 'dp.st.dev.xxxxx' | doppler configure set token --scope <target-path>"
-    echo ""
-    echo "  2. For production environment, run as docker user:"
+    echo "  For production environment, run as docker user:"
+    echo "     export HISTIGNORE=\"doppler*\""
     echo "     echo 'dp.st.prd.xxxxx' | doppler configure set token --scope <target-path>"
 
 fi
