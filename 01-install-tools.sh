@@ -7,7 +7,7 @@ set -e
 echo "==> Installing common CLI tools..."
 
 apt-get update
-apt-get install -y jq sudo
+apt-get install -y jq sudo git wget curl unzip btop
 
 # Description: Installs Tailscale VPN for secure remote access
 # Reference: https://tailscale.com/kb/1031/install-linux

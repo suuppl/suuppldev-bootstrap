@@ -8,8 +8,8 @@ Clone the bootstrap scripts repository on your fresh server:
 
 ```bash
 # Option 1: Clone the dedicated bootstrap repo (recommended)
-git clone https://github.com/suuppl/suuppldev-bootstrap.git /opt/bootstrap
-cd /opt/bootstrap
+git clone https://github.com/suuppl/suuppldev-bootstrap.git bootstrap
+cd bootstrap
 
 # Option 2: Download as archive without git
 curl -L https://github.com/suuppl/suuppldev-bootstrap/archive/refs/heads/main.tar.gz | tar xz
@@ -18,20 +18,26 @@ cd suuppldev-bootstrap-main
 
 ## 🚀 Usage
 
-Run the scripts **in order** as root. Each script performs a specific setup task and is safe to re-run.
+Run the scripts as root. Each script performs a specific setup task and is safe to re-run.
+
+### 0. Prepare Proxmox VE (optional, if running on proxmox)
+```bash
+./00-prepare-pve.sh
+```
+
+Runs the [PVE Post Install Script](https://community-scripts.github.io/ProxmoxVE/scripts?id=post-pve-install)
 
 ### 1. Install Development Tools
 ```bash
-sudo ./01-install-tools.sh
+./01-install-tools.sh
 ```
 Installs useful development and debugging tools:
-- `git`, `curl`, `wget`, `jq`
-- `ncdu`, `tmux`, `btop`
+- `jq` `sudo` `git` `wget` `curl` `unzip` `btop`
 - Build essentials and common utilities
 
 ### 2. Install Tailscale
 ```bash
-sudo ./02-install-tailscale.sh
+./02-install-tailscale.sh
 ```
 Installs and connects Tailscale VPN client:
 - Adds Tailscale repository
@@ -40,7 +46,7 @@ Installs and connects Tailscale VPN client:
 
 ### 3. Create Docker User
 ```bash
-sudo ./03-create-docker-user.sh
+./03-create-docker-user.sh
 ```
 ## Bootstrap scripts
 
