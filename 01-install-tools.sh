@@ -57,11 +57,30 @@ else
     if command -v doppler &>/dev/null; then
         echo "    Doppler is already installed (version: $(doppler --version))"
     else
-        # Install Doppler CLI using their installation script
-        echo "    Downloading and running Doppler installation script..."
-        curl -Ls https://cli.doppler.com/install.sh | sh
+        # Install required dependencies
+        echo "    Installing dependencies..."
+        apt-get update
+        apt-get install -y apt-transport-https ca-certificates curl gnupg
 
-        # echo "==> Doppler CLI installed successfully!"
+        # Add Doppler GPG key
+        echo "    Adding Doppler GPG key..."
+        curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | \
+            gpg --dearmor -o /usr/share/keyrings/doppler-archive-keyring.gpg
+
+        # Add Doppler repository
+        echo "    Adding Doppler repository..."
+        echo "deb [signed-by=/usr/share/keyrings/doppler-archive-keyring.gpg] https://packages.doppler.com/public/cli/deb/debian any-version main" | \
+            tee /etc/apt/sources.list.d/doppler-cli.list
+
+        # Install Doppler
+        echo "    Installing Doppler..."
+        apt-get update
+        apt-get install -y doppler
+
+        # Prevent doppler commands from appearing in bash history
+        export HISTIGNORE="doppler*"
+
+        echo "==> Doppler CLI installed successfully!"
     fi
     echo ""
     echo "  For production environment, run as docker user:"
