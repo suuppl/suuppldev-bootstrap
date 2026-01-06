@@ -7,7 +7,7 @@ set -e
 echo "==> Installing common CLI tools..."
 
 apt-get update
-apt-get install -y jq sudo git wget curl unzip btop
+apt-get install -y jq sudo git wget curl unzip btop rsync
 
 
 read -p "Do you want to install Tailscale? [Y/n] " -n 1 -r
